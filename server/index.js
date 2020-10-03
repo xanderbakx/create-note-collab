@@ -6,8 +6,12 @@ const PORT = 8080
 
 io.on('connection', socket => {
   console.log(`New connection: ${socket.id}`)
-  socket.on('text-change', change => {
-    io.emit('remote-change', change)
+  socket.on('update-content', content => {
+    console.log('updated')
+    io.emit('update-content', content)
+  })
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
   })
 })
 

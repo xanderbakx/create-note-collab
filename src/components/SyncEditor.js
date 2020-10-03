@@ -1,36 +1,50 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {createEditor} from 'slate'
-import {Slate, Editable, withReact} from 'slate-react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { createEditor, Node } from 'slate'
+import { Slate, Editable, withReact } from 'slate-react'
+import { v4 as uuidv4 } from 'uuid'
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:8080')
 
+// const serialize = nodes => {
+//   console.log(nodes.newValue)
+//   return nodes.newValue.map(n => Node.string(n)).join('')
+// }
+
 const SyncEditor = () => {
-const editor = useMemo(() => withReact(createEditor()), [])
-  // Add the initial value when setting up our state.
+  const editor = useMemo(() => withReact(createEditor()), [])
   const [value, setValue] = useState([
     {
-      children: [{ text: 'A line of text in a paragraph.' }],
+      children: [
+        { text: 'This is editable plain text, just like a <textarea>!' },
+      ],
     },
   ])
 
+  //const content = serialize(value)
+  const uniqueId = uuidv4()
+
   useEffect(() => {
-    socket.once('init-value', (value) => {
-      setValue(value)
-    })
-    socket.emit('send-value')
-    socket.on('remote-change', ({editorId: value}) => {
-      setValue(value)
+    socket.on('update-content', data => {
+      console.log('update', data)
+      setValue(data)
     })
   })
 
   return (
-    <Slate editor={editor} value={value} onChange={newValue => {
-      setValue(newValue)
-      socket.emit('text-change', {
-        value: newValue
-      })
-    }}>
+    <Slate
+      editor={editor}
+      value={value}
+      onChange={newValue => {
+        console.log('change')
+        setValue(newValue)
+        socket.emit(
+          'update-content',
+          //setValue(newValue)
+          newValue
+        )
+      }}
+    >
       <Editable />
     </Slate>
   )
