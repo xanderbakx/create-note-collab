@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^7.2.1",
     "express": "^4.17.1",
     "is-hotkey": "^0.1.6",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
@@ -41,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.4"
   }
 }
