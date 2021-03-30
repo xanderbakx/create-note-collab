@@ -1,5 +1,5 @@
-const Document = require('./documents')
+const Document = require('./documents');
 
 module.exports = {
   Document,
-}
+};

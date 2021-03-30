@@ -1,9 +1,10 @@
-const router = require("express").Router();
-const { Document } = require("../db/models");
+const router = require('express').Router();
+const { Document } = require('../db/models');
+
 module.exports = router;
 
 // GET all documents
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const documents = await Document.find();
     res.json(documents);
@@ -13,7 +14,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // GET ONE document
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const document = await Document.findOne({
@@ -26,7 +27,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // CREATE document
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const document = await Document.create(req.body);
     res.json(document);
@@ -36,7 +37,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // UPDATE ONE document
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const document = await Document.findOne({
@@ -49,7 +50,7 @@ router.put("/:id", async (req, res, next) => {
         {
           _id: id,
         },
-        req.body
+        req.body,
       );
       res.json(document);
     }
@@ -59,7 +60,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // DELETE ONE document
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     await Document.deleteOne({
