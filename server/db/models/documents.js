@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const documentSchema = new Schema(
   {
@@ -12,12 +12,12 @@ const documentSchema = new Schema(
       required: true,
     },
     body: {
-      type: Object,
+      type: String,
       required: true,
     },
   },
   { timestamps: true }
-)
+);
 
-const Document = mongoose.model('Document', documentSchema)
-module.exports = Document
+const Document = mongoose.model("Document", documentSchema);
+module.exports = Document;
